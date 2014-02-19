@@ -1,7 +1,7 @@
 HeatFluxAnalyzer
 ================
 
-Lake Heat Flux Analyzer is a MATLAB (and R) code package for calculating derived heat flux information for lakes
+Lake Heat Flux Analyzer is a MATLAB code package for calculating derived heat flux information for lakes
 
 Citing Lake Heat Flux Analyzer
 -------
