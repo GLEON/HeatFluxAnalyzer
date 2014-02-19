@@ -1,0 +1,13 @@
+Configuration file for Esthwaite
+
+Qe		#outputs
+3600		#output resolution (s)
+2		#height from surface for wind measurement (m)
+2		#height from surface for temperature measurement (m)
+2		#height from surface for humidity measurement (m)
+54		#latitude (degN)
+0		#altitude (m)
+98		#max wind speed (m/s)   inf if none
+0		#min wind speed (m/s)   -inf if none
+Y		#plot figure (Y/N)
+Y		#write results to file (Y/N)
