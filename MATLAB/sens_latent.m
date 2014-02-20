@@ -222,11 +222,11 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         
         % alter zeta in stable cases ?? is this the VERY stable?
         zeta = hu./obu;
-        idx = zeta >= 1;
-        Uz(idx_vs) = max(Uz(idx),0.1);
+        [idx_m_vu,idx_m_u,~,~,~,idx_vs] = zeta_indices(zeta,zetam,zetat);
+        Uz(idx_vs) = max(Uz(idx_vs),0.1);
                         
         % avoid singularity at um = 0 for unstable conditions     
-        idx = zeta < 0;
+        idx = idx_m_vu | idx_m_u; % unstable
         th = (ta + 273.16).*(1000./press).^(const_gas./1004.67); % potential temperature  
         thvstar = tstar.*(1 + 0.61.*q_z./1000) + 0.61.*th.*qstar; % temperature scaling parameter
         thv = th.*(1 + 0.61.*q_z./1000); % virtual potential temperature    
