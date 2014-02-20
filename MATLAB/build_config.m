@@ -414,8 +414,8 @@ function[] = loader_func(varargin)
     else
         writeYes = 'N';
     end
-    set(S.outT(2,1),'String',plotYes)
-    set(S.outT(1,1),'String',writeYes)
+    set(S.outT(1,1),'String',plotYes)
+    set(S.outT(2,1),'String',writeYes)
     set(S.outT(1,2),'String',num2str(wndMx))
     set(S.outT(2,2),'String',num2str(wndMn))
     set(S.outT(1,3),'String',num2str(lat))
