@@ -120,7 +120,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         idx = zeta < 0 & zeta >= zetam; % unstable conditions
         ustar(idx) = (Uz(idx).*const_vonKarman)./...
             (log(hu./zo(idx)) - psi_zeng(1,zeta(idx)));
-        idx = zeta > 0 & zeta <= 1; % stable conditions
+        idx = zeta >= 0 & zeta <= 1; % stable conditions
         ustar(idx) = (Uz(idx).*const_vonKarman)./...
             (log(hu./zo(idx)) + 5.*zeta(idx));
         idx = zeta > 1; % very stable conditions
@@ -138,7 +138,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         idx = zeta >= zetat & zeta < 0;% unstable conditions
         tstar(idx) = (const_vonKarman.*(ta(idx) - ts(idx)))./...
             (log(ht./zot(idx)) - psi_zeng(2,zeta(idx)));
-        idx = zeta > 0 & zeta <= 1; % stable conditions
+        idx = zeta >= 0 & zeta <= 1; % stable conditions
         tstar(idx) = (const_vonKarman.*(ta(idx) - ts(idx)))./...
             (log(ht./zot(idx)) + 5.*zeta(idx));
         idx = zeta > 1; % very stable conditions
@@ -156,7 +156,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         idx = zeta >= zetat & zeta < 0; % unstable conditions
         qstar(idx) = (const_vonKarman.*(q_z(idx) - q_s(idx)))./...
             (log(hq./zoq(idx)) - psi_zeng(2,zeta(idx)));
-        idx = zeta > 0 & zeta <= 1; % stable conditions
+        idx = zeta >= 0 & zeta <= 1; % stable conditions
         qstar(idx) = (const_vonKarman.*(q_z(idx) - q_s(idx)))./...
             (log(hq./zoq(idx)) + 5.*zeta(idx));
         idx = zeta > 1; % very stable conditions
@@ -172,7 +172,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         u10(idx) = (ustar(idx)./const_vonKarman).*...
             ((log((zetam.*obu(idx))./zo(idx)) - psi_zeng(1,zetam)) + ...
             1.14.*(((-zeta(idx)).^0.333) - ((-zetam).^0.333)));
-        idx = zeta < 0 & zeta > zetam;% unstable conditions
+        idx = zeta < 0 & zeta >= zetam;% unstable conditions
         u10(idx) = (ustar(idx)./const_vonKarman).*...
             (log(10./zo(idx)) - psi_zeng(1,zeta(idx)));
         idx = zeta >= 0 & zeta <= 1;% stable conditions    
@@ -187,7 +187,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         t10(idx) = ((tstar(idx)./const_vonKarman).*...
             ((log((zetat.*obu(idx))./zot(idx)) - psi_zeng(2,zetat)) + ...
             0.8.*((-zetat).^-0.333 - ((-zeta(idx))).^-0.333))) + ts(idx);  
-        idx = zeta > zetat & zeta < 0;% unstable conditions
+        idx = zeta < 0 & zeta >= zetat;% unstable conditions
         t10(idx) = ((tstar(idx)./const_vonKarman).*...
             log(10./zot(idx)) - psi_zeng(2,zeta(idx))) + ts(idx); 
         idx = zeta >= 0 & zeta <= 1;% stable conditions
@@ -202,7 +202,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         q10(idx) = ((qstar(idx)./const_vonKarman).*...
             ((log((zetat.*obu(idx))./zoq(idx)) - psi_zeng(2,zetat)) + ...
             0.8.*((-zetat).^-0.333 - ((-zeta(idx))).^-0.333))) + q_s(idx);            
-        idx = zeta > zetat & zeta < 0;% unstable conditions
+        idx = zeta < 0 & zeta >= zetat;% unstable conditions
         q10(idx) = ((qstar(idx)./const_vonKarman).*...
             (log(10./zoq(idx)) - psi_zeng(2,zeta(idx)))) + q_s(idx);
         idx = zeta >= 0 & zeta <= 1;% stable conditions
