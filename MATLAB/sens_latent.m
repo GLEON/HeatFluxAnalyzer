@@ -265,12 +265,12 @@ end
 function [idx_m_vu,idx_m_u,idx_t_vu,idx_t_u,idx_s,idx_vs] = zeta_indices(zeta,zetam,zetat)
 
         
-    idx_m_vu = zeta < zetam; % very unstable conditions; zetaM
+    idx_m_vu = zeta < zetam;            % very unstable conditions; zetaM
     idx_m_u = zeta < 0 & zeta >= zetam; % unstable conditions; zetaM
-    idx_t_vu = zeta < zetat; % very unstable conditions; zetaT
+    idx_t_vu = zeta < zetat;            % very unstable conditions; zetaT
     idx_t_u = zeta < 0 & zeta >= zetat; % unstable conditions; zetaT
-    idx_s = zeta >= 0 & zeta <= 1; % stable conditions
-    idx_vs = zeta > 1; % very stable conditions
+    idx_s = zeta >= 0 & zeta <= 1;      % stable conditions
+    idx_vs = zeta > 1;                  % very stable conditions
     % NaNs stay undefined
 end
 
