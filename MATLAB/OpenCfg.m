@@ -1,10 +1,10 @@
 function [outPuts,outRs,wndH,hqH,htH,lat,alt,...
-            wndMx,wndMn,plotYes,writeYes] = OpenCfg(LakeName,Year)
+            wndMx,wndMn,plotYes,writeYes] = OpenCfg(LakeName,folder)
 %----Author: Jordan S Read 2009 ----
 
 %trouble with commentStyle***
 %need to get rid of whitespace in text inputs
-fileName = [Year '/' LakeName '.lke'];
+fileName = [folder '/' LakeName '.lke'];
 fID = fopen(fileName);
 if fID ==-1
     fileName = [LakeName '.lke'];
