@@ -175,7 +175,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         idx = zeta < 0 & zeta > zetam;% unstable conditions
         u10(idx) = (ustar(idx)./const_vonKarman).*...
             (log(10./zo(idx)) - psi_zeng(1,zeta(idx)));
-        idx = zeta > 0 & zeta < 1;% stable conditions        
+        idx = zeta >= 0 & zeta <= 1;% stable conditions    
         u10(idx) = (ustar(idx)./const_vonKarman).*...
             (log(10./zo(idx)) + 5.*zeta(idx));
         idx = zeta > 1; % very stable conditions
@@ -205,7 +205,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
         idx = zeta > zetat & zeta < 0;% unstable conditions
         q10(idx) = ((qstar(idx)./const_vonKarman).*...
             (log(10./zoq(idx)) - psi_zeng(2,zeta(idx)))) + q_s(idx);
-        idx = zeta > 0 & zeta < 1;% stable conditions
+        idx = zeta >= 0 & zeta <= 1;% stable conditions
         q10(idx) = ((qstar(idx)./const_vonKarman).*...
             (log(10./zoq(idx)) + 5.*zeta(idx))) + q_s(idx);
         idx = zeta > 1;% very stable conditions
