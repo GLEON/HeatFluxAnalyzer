@@ -64,10 +64,23 @@ if TT.openWtr
         error([LakeName '.wtr file not found']);
     end
     fclose all;
-    [wtrD,wtr,~] = gFileOpen(wtrFileName);
-    if size(wtr,2) > 1;
-        wtr = wtr(:,1);
-    end   
+    [wtrD,wtr,heads] = gFileOpen(wtrFileName);
+    headers = textscan(heads,'%s','Delimiter','\t');
+    headers = headers{1}(2:end); % get rid of dateTime
+    depths = NaN(1,length(headers));
+    for d =1:length(depths)
+        txt = headers{d};
+        depths(d) = str2double(txt(5:end));
+    end
+    [mnDep,mnIdx] = min(depths);
+    if length(depths) > 1;
+        wtr = wtr(:,mnIdx);
+    end  
+    if mnDep>0
+        disp([' ...' num2str(mnDep) ...
+            'm is the shallowest depth in the .wtr file'...
+            ' which will be used to represent surface water temperatures'])
+    end
     
     % remove nand
     idx = isnan(wtr);
