@@ -6,7 +6,7 @@ num2delim = 20;
 defSlt = 'wTemp';
 % see if file exists
 
-fI = fopen([directory '/' LakeName '.lke']);
+fI = fopen([directory '/' LakeName '.hfx']);
 if ~lt(fI,0)
     loader = 'on';
 else
@@ -126,7 +126,7 @@ slcFrame=uipanel('Parent',S.fh,'BackgroundColor',bckColor,...
         bgPw+spc*2 bgPh+btnH+spc*3+pnS]);
 
 lkeFrame=uipanel('Parent',S.fh,'BackgroundColor',bckColor,...
-        'Title',[LakeName '.lke preview'],'FontSize',10);
+        'Title',[LakeName '.hfx preview'],'FontSize',10);
         setpixelposition(lkeFrame,[filePanel(1)-spc filePanel(2)-spc ...
         filePanel(3)+spc*2 filePanel(4)+spc*2+pnS]);
 lkeInFrame=uipanel('Parent',S.fh,'BackgroundColor',bckColor,...
@@ -435,7 +435,7 @@ end
 function[] =  publish(varargin)
     S = varargin{3};
     tempStr = get(S.file,'String');
-    fileName = [directory '/' LakeName '.lke'];
+    fileName = [directory '/' LakeName '.hfx'];
     outFile = fopen(fileName,'w');
     if lt(outFile,0)
         error('file directory invalid')

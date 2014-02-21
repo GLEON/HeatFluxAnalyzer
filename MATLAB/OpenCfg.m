@@ -4,14 +4,14 @@ function [outPuts,outRs,wndH,hqH,htH,lat,alt,...
 
 %trouble with commentStyle***
 %need to get rid of whitespace in text inputs
-fileName = [folder '/' LakeName '.lke'];
+fileName = [folder '/' LakeName '.hfx'];
 fID = fopen(fileName);
 if fID ==-1
-    fileName = [LakeName '.lke'];
+    fileName = [LakeName '.hfx'];
 end
 fID = fopen(fileName);
 if fID ==-1
-    error([LakeName '.lke file not found'])
+    error([LakeName '.hfx file not found'])
 end
 
 TPuts = textscan(fID,'%[^#]','delimiter',',','HeaderLines',2);

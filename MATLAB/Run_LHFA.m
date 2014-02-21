@@ -19,7 +19,7 @@ end
 matSec = 86400;         % number of seconds in a day
 smplTs = 50;            % samplerate test length
 dateTl = 0.00001;       % tolerance for equal day (day fraction)
-fprintf(['Reading ' LakeName '.lke file']);
+fprintf(['Reading ' LakeName '.hfx file']);
 [outPuts,outRs,wndH,hqH,htH,lat,alt,...
             wndMx,wndMn,plotYes,writeYes] = ...
     OpenCfg( LakeName,Folder );
@@ -27,7 +27,7 @@ fprintf(['Reading ' LakeName '.lke file']);
 
 if ~any([plotYes writeYes])    
     error(['User must specify either to write results,'...
-        ' plot results, or both ....... (see ' LakeName '.lke)'])
+        ' plot results, or both ....... (see ' LakeName '.hfx)'])
 end
 
 fprintf('...completed\n\n') ;
