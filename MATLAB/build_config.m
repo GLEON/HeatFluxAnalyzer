@@ -389,7 +389,7 @@ end
 function[] = loader_func(varargin)
     S = varargin{3};
     if get(S.loader,'value')
-        [outputs,outRs,wndH,hqH,htH,lat,alt,wtrMx,wtrMn,...
+        [outputs,outRs,wndH,hqH,htH,lat,alt,...
             wndMx,wndMn,plotYes,writeYes] = ...
         OpenCfg(LakeName,directory);
         exstOut = get(S.ls,'String');
@@ -414,12 +414,12 @@ function[] = loader_func(varargin)
     else
         writeYes = 'N';
     end
-    set(S.outT(2,1),'String',plotYes)
-    set(S.outT(1,1),'String',writeYes)
-    set(S.outT(2,2),'String',num2str(wndMx))
-    set(S.outT(1,2),'String',num2str(wndMn))
-    set(S.outT(2,3),'String',num2str(lat))
-    set(S.outT(1,3),'String',num2str(alt))  
+    set(S.outT(1,1),'String',plotYes)
+    set(S.outT(2,1),'String',writeYes)
+    set(S.outT(1,2),'String',num2str(wndMx))
+    set(S.outT(2,2),'String',num2str(wndMn))
+    set(S.outT(1,3),'String',num2str(lat))
+    set(S.outT(2,3),'String',num2str(alt))  
     set(S.outT(1,4),'String',num2str(htH))
     set(S.outT(2,4),'String',num2str(hqH))   
     set(S.outT(2,5),'String',num2str(wndH))
