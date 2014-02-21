@@ -530,7 +530,7 @@ if writeYes && ~isempty(writeNames)
                                     % to the file everytime wrt is called
     wrt('DateTime');
     for i = 1:cnt-1
-        wrt([delimO writeNames{i}]);
+        wrt([delimO writeNames{i} plotTable.(writeNames{i}).YLabel]);
     end
     wrt('\r\n');
     for j = 1:varL
