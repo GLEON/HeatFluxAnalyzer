@@ -80,6 +80,7 @@ if TT.openWtr
         disp([' ...' num2str(mnDep) ...
             'm is the shallowest depth in the .wtr file'...
             ' which will be used to represent surface water temperatures'])
+        pause(1.5);
     end
     
     % remove nand
