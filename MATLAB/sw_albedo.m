@@ -14,6 +14,8 @@ function sw_alb = sw_albedo(Jday,lat)
 dateV = datevec(Jday); % date vector
 Month = dateV(:,2);
 
+lat = abs(lat);
+
 % calculate albedo following Cogley (1979)          
 albedo = [90,nan,30.1,33.3,25.3,16.7,13.3,15,22.6,31.7,30.1,NaN,NaN,18.1;...
     80,30.1,33.7,26.6,17.8,13.8,12.3,13.2,16.3,23.8,32.9,30.1,NaN,15.7;...
