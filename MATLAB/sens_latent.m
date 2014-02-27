@@ -13,7 +13,7 @@ function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
 % aerodynamic algorithms for the computation of sea surface fluxes using
 % TOGA COARE and TAO data. Journal of Climate 11: 2628-2644.
 
-
+Uz(Uz < 0.2) = 0.2;
     
 % pre-define arrays
     tstar = nan(length(Uz),1);
