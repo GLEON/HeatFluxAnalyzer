@@ -111,21 +111,36 @@ if TT.openWnd
 end   
 
 if TT.openSW
-    fprintf(['Reading ' LakeName '.sw file'])
-    swFileName  = [Folder '/' LakeName '.sw'];
-    oper = fopen(swFileName);
-    if eq(oper,-1)
-        error([LakeName '.sw file not found']);
+    if exist([Folder '/' LakeName '.sw']) > 0;
+        fprintf(['Reading ' LakeName '.sw file'])
+        swFileName  = [Folder '/' LakeName '.sw'];
+        fclose all;
+        [swD,sw] = gFileOpen(swFileName);
+        sw(sw < 0) = 0;
+
+        % remove nans
+        idx = isnan(sw);
+        sw(idx) = [];
+        swD(idx) = []; 
+        fprintf('...completed\n\n') ;
+        
+    else if exist([Folder '/' LakeName '.par']) > 0;
+        fprintf(['Reading ' LakeName '.par file'])
+        swFileName  = [Folder '/' LakeName '.par'];
+        fclose all;
+        [swD,sw] = gFileOpen(swFileName);
+        sw(sw < 0) = 0;
+        % remove nans
+        idx = isnan(sw);
+        sw(idx) = [];
+        swD(idx) = []; 
+        parMult = 0.4957;
+        sw = sw.*parMult;
+        fprintf('...completed\n\n');
+        else
+            error([LakeName '.sw nor .par file not found']);
+        end
     end
-    fclose all;
-    [swD,sw] = gFileOpen(swFileName);
-    sw(sw < 0) = 0;
-    
-    % remove nans
-    idx = isnan(sw);
-    sw(idx) = [];
-    swD(idx) = []; 
-    fprintf('...completed\n\n') ;
 end  
 
 if TT.openAirT
@@ -313,7 +328,7 @@ if TT.wrt_wTemp
 end
 
 % calculate surface fluxes
-if TT.senslatYes
+if TT.senslatYes || TT.QtotYes
     mm = sens_latent(wtr,wnd,airT,rh,wndH,htH,hqH,alt);
 end
 
@@ -328,14 +343,21 @@ if TT.wrt_tau
 end
 
 % sensible heat flux
-if TT.wrt_Qh
-    writeTable.Qh = mm(:,3);
+if TT.wrt_Qh || TT.QtotYes
+    Qh = mm(:,3);
+    if TT.wrt_Qh
+        writeTable.Qh = Qh;
+    end
 end
 
 % latent heat flux
-if TT.wrt_Qe
-    writeTable.Qe = mm(:,2);
+if TT.wrt_Qe || TT.QtotYes
+    Qe = mm(:,2);
+    if TT.wrt_Qe
+        writeTable.Qe = Qe;
+    end
 end
+
 
 % air shear velocity 
 if TT.wrt_uSt_a
@@ -441,7 +463,8 @@ if TT.wrt_Evap
 end
 
 % net long wave heat flux
-if TT.wrt_Qlnet
+% net long wave heat flux
+if TT.wrt_Qlnet || TT.QtotYes
     press = 101325.*(1 - 2.25577e-5.*alt).^5.25588; % Pa
     press = press./100; % mb
     [~,~,Qlnet] = calc_lwnet(wtrD,lat,press,airT,rh,sw,wtr);
@@ -458,7 +481,9 @@ if TT.wrt_Qlnet
     % then replace nan with dat2
     Qlnet(isnan(Qlnet)) = Q2(isnan(Qlnet));
     
-    writeTable.Qlnet = -Qlnet;
+    if TT.wrt_Qlnet
+        writeTable.Qlnet = -Qlnet;
+    end
 end
 
 % incoming long wave heat flux
@@ -491,10 +516,18 @@ if TT.wrt_Qlout
 end
 
 % reflected short wave radiaiton
-if TT.wrt_Qsr
+if TT.wrt_Qsr || TT.QtotYes
     sw_alb = sw_albedo(dates,lat);
     Qsr = sw.*sw_alb; % reflected short wave radiation
-    writeTable.Qsr = Qsr;
+    if TT.wrt_Qsr
+        writeTable.Qsr = Qsr;
+    end
+end
+
+% total surface heat flux
+if TT.wrt_Qtot
+    Qtot = -sw + Qsr + Qe + Qh + Qlnet;
+    writeTable.Qtot = Qtot;
 end
 
 % build plot array
