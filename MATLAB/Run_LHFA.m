@@ -83,11 +83,42 @@ if TT.openWtr
         pause(1.5);
     end
     
-    % remove nand
+    % remove nans
     idx = isnan(wtr);
     wtr(idx) = [];
     wtrD(idx) = []; 
     fprintf('...completed\n\n') ;
+    
+    %*** find samplerate of raw data 
+    if length(wtrD) < smplTs
+        tLen = length(wtrD);
+    else
+        tLen = smplTs;
+    end
+    steps = NaN(1,tLen-1);
+    for i = 1:tLen-1
+        steps(i) = wtrD(i+1)-wtrD(i);
+    end    
+    if eq(min(steps),0)
+        matRs = mean(steps)*matSec;
+    else
+        matRs = min(steps)*matSec; %current sample rate of raw data in seconds
+    end
+    clear vals ind numMx numCont steps tLen
+    if (outRs - matRs)>dateTl
+        TT.dwnSmple = true;   %down sample if necessary
+    end
+
+    % *** down sampling ***
+    if TT.dwnSmple
+        fprintf(['Down sampling ' LakeName '.wtr data']);
+        [DS_wtrD,DS_wtr] = DownSample_TS(wtrD,outRs,wtr);
+        wtrD = DS_wtrD;
+        wtr = DS_wtr;
+        varL = length(wtrD);
+        clear DS_wtrD DS_wtr
+        fprintf('...completed\n\n');
+    end
 end
            
 if TT.openWnd
@@ -106,8 +137,38 @@ if TT.openWnd
     idx = isnan(wnd);
     wnd(idx) = [];
     wndD(idx) = []; 
+    fprintf('...completed\n\n');
     
-    fprintf('...completed\n\n') ;
+    %*** find samplerate of raw data 
+    if length(wndD) < smplTs
+        tLen = length(wndD);
+    else
+        tLen = smplTs;
+    end
+    steps = NaN(1,tLen-1);
+    for i = 1:tLen-1
+        steps(i) = wndD(i+1)-wndD(i);
+    end    
+    if eq(min(steps),0)
+        matRs = mean(steps)*matSec;
+    else
+        matRs = min(steps)*matSec; %current sample rate of raw data in seconds
+    end
+    clear vals ind numMx numCont steps tLen
+    if (outRs - matRs)>dateTl
+        TT.dwnSmple = true;   %down sample if necessary
+    end
+
+    % *** down sampling ***
+    if TT.dwnSmple
+        fprintf(['Down sampling ' LakeName '.wnd data']);
+        [DS_wndD,DS_wnd] = DownSample_TS(wndD,outRs,wnd);
+        wndD = DS_wndD;
+        wnd = DS_wnd;
+        varL = length(wndD);
+        clear DS_wndD DS_wnd
+        fprintf('...completed\n\n');
+    end
 end   
 
 if TT.openSW
@@ -122,7 +183,38 @@ if TT.openSW
         idx = isnan(sw);
         sw(idx) = [];
         swD(idx) = []; 
-        fprintf('...completed\n\n') ;
+        fprintf('...completed\n\n');
+        
+        %*** find samplerate of raw data 
+        if length(swD) < smplTs
+            tLen = length(swD);
+        else
+            tLen = smplTs;
+        end
+        steps = NaN(1,tLen-1);
+        for i = 1:tLen-1
+            steps(i) = swD(i+1)-swD(i);
+        end    
+        if eq(min(steps),0)
+            matRs = mean(steps)*matSec;
+        else
+            matRs = min(steps)*matSec; %current sample rate of raw data in seconds
+        end
+        clear vals ind numMx numCont steps tLen
+        if (outRs - matRs)>dateTl
+            TT.dwnSmple = true;   %down sample if necessary
+        end
+
+        % *** down sampling ***
+        if TT.dwnSmple
+            fprintf(['Down sampling ' LakeName '.sw data']);
+            [DS_swD,DS_sw] = DownSample_TS(swD,outRs,sw);
+            swD = DS_swD;
+            sw = DS_sw;
+            varL = length(swD);
+            clear DS_swD DS_sw
+            fprintf('...completed\n\n');
+        end
         
     else if exist([Folder '/' LakeName '.par']) > 0;
         fprintf(['Reading ' LakeName '.par file'])
@@ -137,6 +229,38 @@ if TT.openSW
         parMult = 0.4957;
         sw = sw.*parMult;
         fprintf('...completed\n\n');
+                
+        %*** find samplerate of raw data 
+        if length(swD) < smplTs
+            tLen = length(swD);
+        else
+            tLen = smplTs;
+        end
+        steps = NaN(1,tLen-1);
+        for i = 1:tLen-1
+            steps(i) = swD(i+1)-swD(i);
+        end    
+        if eq(min(steps),0)
+            matRs = mean(steps)*matSec;
+        else
+            matRs = min(steps)*matSec; %current sample rate of raw data in seconds
+        end
+        clear vals ind numMx numCont steps tLen
+        if (outRs - matRs)>dateTl
+            TT.dwnSmple = true;   %down sample if necessary
+        end
+
+        % *** down sampling ***
+        if TT.dwnSmple
+            fprintf(['Down sampling ' LakeName '.sw data']);
+            [DS_swD,DS_sw] = DownSample_TS(swD,outRs,sw);
+            swD = DS_swD;
+            sw = DS_sw;
+            varL = length(swD);
+            clear DS_swD DS_sw
+            fprintf('...completed\n\n');
+        end
+        
         else
             error([LakeName '.sw nor .par file not found']);
         end
@@ -157,7 +281,38 @@ if TT.openAirT
     idx = isnan(airT);
     airT(idx) = [];
     airTD(idx) = []; 
-    fprintf('...completed\n\n') ;
+    fprintf('...completed\n\n');
+    
+    %*** find samplerate of raw data 
+    if length(airTD) < smplTs
+        tLen = length(airTD);
+    else
+        tLen = smplTs;
+    end
+    steps = NaN(1,tLen-1);
+    for i = 1:tLen-1
+        steps(i) = airTD(i+1)-airTD(i);
+    end
+    if eq(min(steps),0)
+        matRs = mean(steps)*matSec;
+    else
+        matRs = min(steps)*matSec; %current sample rate of raw data in seconds
+    end
+    clear vals ind numMx numCont steps tLen
+    if (outRs - matRs)>dateTl
+        TT.dwnSmple = true;   %down sample if necessary
+    end
+    
+    % *** down sampling ***
+    if TT.dwnSmple
+        fprintf(['Down sampling ' LakeName '.airT data']);
+        [DS_airTD,DS_airT] = DownSample_TS(airTD,outRs,airT);
+        airTD = DS_airTD;
+        airT = DS_airT;
+        varL = length(airTD);
+        clear DS_airTD DS_airT
+        fprintf('...completed\n\n');
+    end
 end   
 
 if TT.openRH
@@ -177,6 +332,37 @@ if TT.openRH
     rh(idx) = [];
     rhD(idx) = []; 
     fprintf('...completed\n\n') ;
+    
+    %*** find samplerate of raw data 
+    if length(rhD) < smplTs
+        tLen = length(rhD);
+    else
+        tLen = smplTs;
+    end
+    steps = NaN(1,tLen-1);
+    for i = 1:tLen-1
+        steps(i) = rhD(i+1)-rhD(i);
+    end
+    if eq(min(steps),0)
+        matRs = mean(steps)*matSec;
+    else
+        matRs = min(steps)*matSec; %current sample rate of raw data in seconds
+    end
+    clear vals ind numMx numCont steps tLen
+    if (outRs - matRs)>dateTl
+        TT.dwnSmple = true;   %down sample if necessary
+    end
+    
+    % *** down sampling ***
+    if TT.dwnSmple
+        fprintf(['Down sampling ' LakeName '.rh data']);
+        [DS_rhD,DS_rh] = DownSample_TS(rhD,outRs,rh);
+        rhD = DS_rhD;
+        rh = DS_rh;
+        varL = length(rhD);
+        clear DS_rhD DS_rh
+        fprintf('...completed\n\n');
+    end
 end
 
 % make sure dates match
@@ -231,73 +417,164 @@ if ~TT.openRH && ~TT.openAirT && ~TT.openSW && ~TT.openWnd
     end
 end
 
-%*** find samplerate of raw data 
-if length(dates) < smplTs
-    tLen = length(dates);
-else
-    tLen = smplTs;
-end
-steps = NaN(1,tLen-1);
-for i = 1:tLen-1
-    steps(i) = dates(i+1)-dates(i);
-end    
+% look for long-wave radiation data
+if TT.openLWnet;
+    if exist([Folder '/' LakeName '.lwnet']) > 0;
+        fprintf(['Reading ' LakeName '.lwnet file'])
+        lwnetFileName = [Folder '/' LakeName '.lwnet'];
+        fclose all;
+        [lwnetD,lwnet] = gFileOpen(lwnetFileName);
+        idx = isnan(lwnet);
+        lwnet(idx) = [];
+        lwnetD(idx) = [];      
+        fprintf('...completed\n\n');
+        
+        %*** find samplerate of raw data 
+        if length(lwnetD) < smplTs
+            tLen = length(lwnetD);
+        else
+            tLen = smplTs;
+        end
+        steps = NaN(1,tLen-1);
+        for i = 1:tLen-1
+            steps(i) = lwnetD(i+1)-lwnetD(i);
+        end
+        if eq(min(steps),0)
+            matRs = mean(steps)*matSec;
+        else
+            matRs = min(steps)*matSec; %current sample rate of raw data in seconds
+        end
+        clear vals ind numMx numCont steps tLen
+        if (outRs - matRs)>dateTl
+            TT.dwnSmple = true;   %down sample if necessary
+        end
 
-if eq(min(steps),0)
-    matRs = mean(steps)*matSec;
-else
-    matRs = min(steps)*matSec; %current sample rate of raw data in seconds
-end
-clear vals ind numMx numCont steps tLen
-if (outRs - matRs)>dateTl
-    TT.dwnSmple = true;   %down sample if necessary
+        % *** down sampling ***
+        if TT.dwnSmple
+            fprintf(['Down sampling ' LakeName '.lwnet data']);
+            [DS_lwnetD,DS_lwnet] = DownSample_TS(lwnetD,outRs,lwnet);
+            lwnetD = DS_lwnetD;
+            lwnet = DS_lwnet;
+            varL = length(lwnetD);
+            clear DS_lwnetD DS_lwnet
+            fprintf('...completed\n\n');
+        end
+        
+    else if exist([Folder '/' LakeName '.lw']) > 0;
+            fprintf([LakeName '.lwnet files not found, looking for .lw file...\n\n'])
+            fprintf(['...Reading ' LakeName '.lw file']);
+            lwFileName  = [Folder '/' LakeName '.lw'];
+            fclose all;
+            [lwD,lw] = gFileOpen(lwFileName);
+            idx = isnan(lw);
+            lw(idx) = [];
+            lwD(idx) = [];      
+            fprintf('...completed\n\n');
+
+            %*** find samplerate of raw data 
+            if length(lwD) < smplTs
+                tLen = length(lwD);
+            else
+                tLen = smplTs;
+            end
+            steps = NaN(1,tLen-1);
+            for i = 1:tLen-1
+                steps(i) = lwD(i+1)-lwD(i);
+            end
+            if eq(min(steps),0)
+                matRs = mean(steps)*matSec;
+            else
+                matRs = min(steps)*matSec; %current sample rate of raw data in seconds
+            end
+            clear vals ind numMx numCont steps tLen
+            if (outRs - matRs)>dateTl
+                TT.dwnSmple = true;   %down sample if necessary
+            end
+
+            % *** down sampling ***
+            if TT.dwnSmple
+                fprintf(['Down sampling ' LakeName '.lw data']);
+                [DS_lwD,DS_lw] = DownSample_TS(lwD,outRs,lw);
+                lwD = DS_lwD;
+                lw = DS_lw;
+                varL = length(lwD);
+                clear DS_lwD DS_lw
+                fprintf('...completed\n\n');
+            end
+                    
+            % find when wtr and lw dates intersect
+            idx = intersect(wtrD,lwD);
+            lw = lw(ismember(lwD,idx));
+            wtr = wtr(ismember(wtrD,idx));
+            wtrD = idx;
+            
+            Tk = wtr + 273.13; % .wtr already called at this point
+            emiss = 0.972;
+            S_B = 5.67E-8;
+            LWo = S_B*emiss*Tk.^4;
+                        
+            % define lwnet
+            lwnet = lw - LWo;
+            lwnet = -lwnet; % positive means cooling
+            lwnetD = idx;
+        else
+            fprintf(['...' LakeName '.lwnet and .lw file missing, using .airT, .rh, .sw, .wtr instead...\n\n'])
+            
+            press = 101325.*(1 - 2.25577e-5.*alt).^5.25588; % Pa
+            press = press./100; % mb
+            [~,~,Qlnet] = calc_lwnet(dates,lat,press,airT,rh,sw,wtr);
+
+            % ensure night time long wave fluxes are equal to the average day time fluxes
+            % cannot detect clooud cover during night
+            dateV = datevec(dates);
+            [~,~,b] = unique(dateV(:,1:3),'rows');
+            daily_av = accumarray(b,Qlnet,[],@nanmean);
+            Q2 = Qlnet;
+            for ii = 1:length(unique(b));
+                Q2(b == ii) = daily_av(ii);
+            end
+            % then replace nan with dat2
+            Qlnet(isnan(Qlnet)) = Q2(isnan(Qlnet));
+            lwnet = -Qlnet;
+            lwnetD = dates;
+        end
+    end     
 end
 
-% *** down sampling ***
-if TT.dwnSmple
-    fprintf('Down sampling data');
-    if TT.openWtr
-        [DS_wtrD,DS_wtr] = DownSample_TS(wtrD,outRs,wtr);
-        wtrD = DS_wtrD;
-        wtr = DS_wtr;
-        varL = length(wtrD);
-        dates = wtrD;
-        clear DS_wtrD DS_wtr
-    end
-    if TT.openAirT
-        [DS_airTD,DS_airT] = DownSample_TS(airTD,outRs,airT);
-        airTD = DS_airTD;
-        airT = DS_airT;
-        varL = length(airTD);
-        dates = airTD;
-        clear DS_airTD DS_airT
-    end
-    if TT.openRH
-        [DS_rhD,DS_rh] = DownSample_TS(rhD,outRs,rh);
-        rhD = DS_rhD;
-        rh = DS_rh;
-        varL = length(rhD);
-        dates = rhD;
-        clear DS_rhD DS_rh
-    end
-    if TT.openSW
-        [DS_swD,DS_sw] = DownSample_TS(swD,outRs,sw);
-        swD = DS_swD;
-        sw = DS_sw;
-        varL = length(swD);
-        dates = swD;
-        clear DS_swD DS_sw
-    end
-    if TT.openWnd
-        [DS_wndD,DS_wnd] = DownSample_TS(wndD,outRs,wnd);
-        wndD = DS_wndD;
-        wnd = DS_wnd;
-        varL = length(wndD);
-        dates = wndD;
-        clear DS_swD DS_sw
-    end
-    fprintf('...completed\n\n');
+% re-adjust dates depending on lw and lwnet files
+if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW && TT.openLWnet
+    idx = intersect(intersect(intersect(intersect(rhD,airTD),wtrD),swD),lwnetD);    
+    dates = idx;
+    wtrD = idx;
+    swD = idx;
+    rhD = idx;
+    airTD = idx;
+    lwnetD = idx;
+    rh = rh(ismember(rhD,idx));
+    airT = airT(ismember(airTD,idx));
+    wtr = wtr(ismember(wtrD,idx));
+    sw = sw(ismember(swD,idx)); 
+    lwnet = lwnet(ismember(lwnetD,idx)); 
 end
 
+if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW && TT.openLWnet && TT.openWnd
+    idx = intersect(intersect(intersect(intersect(intersect(rhD,airTD),wtrD),swD),lwnetD),wndD);    
+    dates = idx;
+    wtrD = idx;
+    swD = idx;
+    rhD = idx;
+    airTD = idx;
+    lwnetD = idx;
+    wndD = idx;
+    rh = rh(ismember(rhD,idx));
+    airT = airT(ismember(airTD,idx));
+    wtr = wtr(ismember(wtrD,idx));
+    sw = sw(ismember(swD,idx)); 
+    lwnet = lwnet(ismember(lwnetD,idx)); 
+    wnd = wnd(ismember(wndD,idx)); 
+end
+
+% if data isn't downsampled, define times and variable length
 if ~TT.dwnSmple
     if TT.openWtr
         dates = wtrD;
@@ -319,6 +596,10 @@ if ~TT.dwnSmple
         dates = wndD;
         varL = length(dates);
     end
+    if TT.openLWnet
+        dates = lwnetD;
+        varL = length(dates);
+    end
 end
     
 %****-----varL is the length of output files as of here-------*****
@@ -334,7 +615,10 @@ end
 
 % monin-obukhow length scale
 if TT.wrt_obu
-    writeTable.obu = mm(:,35);
+    zL1 = wndH./mm(:,35);
+    zL1(zL1 > 15) = 15;
+    zL1(zL1 < -15) = -15;
+    writeTable.obu = zL1;
 end
 
 % momentum flux
@@ -357,7 +641,6 @@ if TT.wrt_Qe || TT.QtotYes
         writeTable.Qe = Qe;
     end
 end
-
 
 % air shear velocity 
 if TT.wrt_uSt_a
@@ -461,29 +744,10 @@ end
 if TT.wrt_Evap
     writeTable.Evap = mm(:,27);
 end
-
+ 
 % net long wave heat flux
-% net long wave heat flux
-if TT.wrt_Qlnet || TT.QtotYes
-    press = 101325.*(1 - 2.25577e-5.*alt).^5.25588; % Pa
-    press = press./100; % mb
-    [~,~,Qlnet] = calc_lwnet(wtrD,lat,press,airT,rh,sw,wtr);
-    
-    % ensure night time long wave fluxes are equal to the average day time fluxes
-    % cannot detect clooud cover during night
-    dateV = datevec(dates);
-    [~,~,b] = unique(dateV(:,1:3),'rows');
-    daily_av = accumarray(b,Qlnet,[],@nanmean);
-    Q2 = Qlnet;
-    for ii = 1:length(unique(b));
-        Q2(b == ii) = daily_av(ii);
-    end
-    % then replace nan with dat2
-    Qlnet(isnan(Qlnet)) = Q2(isnan(Qlnet));
-    
-    if TT.wrt_Qlnet
-        writeTable.Qlnet = -Qlnet;
-    end
+if TT.wrt_Qlnet
+    writeTable.Qlnet = lwnet;
 end
 
 % incoming long wave heat flux
@@ -512,7 +776,7 @@ if TT.wrt_Qlout
     emiss = 0.972;
     S_B = 5.67E-8;
     LWo = S_B*emiss*Tk.^4;
-    writeTable.Qlout = -LWo;
+    writeTable.Qlout = LWo;
 end
 
 % reflected short wave radiaiton
@@ -526,7 +790,7 @@ end
 
 % total surface heat flux
 if TT.wrt_Qtot
-    Qtot = -sw + Qsr + Qe + Qh + Qlnet;
+    Qtot = -sw + Qsr + Qe + Qh + lwnet;
     writeTable.Qtot = Qtot;
 end
 
