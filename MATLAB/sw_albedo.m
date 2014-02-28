@@ -7,12 +7,12 @@ function sw_alb = sw_albedo(Jday,lat)
 % OUTPUTS:
 %   sw_alb: albedo for short wave radiation for given latitude and time of year
 %
-% If albedo value is missing, we use the value specified in Nunez et al.,
-% (1972).
-
+% Cogley, J.G. The albedo of water as a function of latitude. 1979.
+% Monthly Weather Review, 107: 775-781.
 
 dateV = datevec(Jday); % date vector
 Month = dateV(:,2);
+doy = Jday - datenum(dateV(:,1),0,0);
 
 lat = abs(lat);
 
@@ -39,9 +39,23 @@ sw_alb = Rng(Month);
 sw_alb = sw_alb./100; % convert to fraction 
 sw_alb = sw_alb(:); % ensure column vector
             
-% replace missing albedo values
-sw_alb(isnan(sw_alb)) = 0.07;
+% if there are any missing values, calculate with other method
+idx = isnan(sw_alb);
+
+if sum(idx) > 0;
+    
+    % northern hemisphere
+    if lat > 0;
+        sw_alb(idx) = 0.08 + 0.02.*sin((((2.*pi)./365).*doy(idx)) + (pi./2));
+    end
+    % equator
+    if lat == 0;
+        sw_alb(isnan(sw_alb)) = 0.08;
+    end
+    % southern hemisphere
+    if lat < 0;
+        sw_alb(idx) = 0.08 - 0.02.*sin((((2.*pi)./365).*doy(idx)) + (pi./2));
+    end
 
 end
-% Cogley, J.G. The albedo of water as a function of latitude. 1979.
-% Monthly Weather Review, 107: 775-781.
+end
