@@ -372,6 +372,7 @@ if ~TT.openSW
     if TT.openWtr && TT.openWnd && TT.openRH && TT.openAirT 
         idx = intersect(intersect(intersect(wtrD,wndD),rhD),airTD); 
         dates = idx;
+        varL = length(dates);
         wtrD = idx;
         wndD = idx;
         rhD = idx;
@@ -387,6 +388,7 @@ if ~TT.openWnd
     if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW 
         idx = intersect(intersect(intersect(rhD,airTD),wtrD),swD);    
         dates = idx;
+        varL = length(dates);
         wtrD = idx;
         swD = idx;
         rhD = idx;
@@ -401,6 +403,7 @@ end
 if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW && TT.openWnd
     idx = intersect(intersect(intersect(intersect(rhD,airTD),wtrD),swD),wndD);    
     dates = idx;
+    varL = length(dates);
     wtrD = idx;
     swD = idx;
     rhD = idx;
@@ -416,6 +419,7 @@ end
 if ~TT.openRH && ~TT.openAirT && ~TT.openSW && ~TT.openWnd
     if TT.openWtr   
         dates = wtrD;
+        varL = length(dates);
     end
 end
 
@@ -547,6 +551,7 @@ end
 if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW && TT.openLWnet
     idx = intersect(intersect(intersect(intersect(rhD,airTD),wtrD),swD),lwnetD);    
     dates = idx;
+    varL = length(dates);
     wtrD = idx;
     swD = idx;
     rhD = idx;
@@ -562,6 +567,7 @@ end
 if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW && TT.openLWnet && TT.openWnd
     idx = intersect(intersect(intersect(intersect(intersect(rhD,airTD),wtrD),swD),lwnetD),wndD);    
     dates = idx;
+    varL = length(dates);
     wtrD = idx;
     swD = idx;
     rhD = idx;
