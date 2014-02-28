@@ -169,6 +169,7 @@ if TT.openWnd
         clear DS_wndD DS_wnd
         fprintf('...completed\n\n');
     end
+    dates = wndD;
 end   
 
 if TT.openSW
@@ -265,6 +266,7 @@ if TT.openSW
             error([LakeName '.sw nor .par file not found']);
         end
     end
+    dates = swD;
 end  
 
 if TT.openAirT
@@ -613,7 +615,7 @@ if TT.senslatYes || TT.QtotYes
     mm = sens_latent(wtr,wnd,airT,rh,wndH,htH,hqH,alt);
 end
 
-% monin-obukhow length scale
+% atmospheric stability
 if TT.wrt_obu
     zL1 = wndH./mm(:,35);
     zL1(zL1 > 15) = 15;
