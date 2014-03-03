@@ -1,4 +1,4 @@
-function [Albdo] = seml_albedo(doy,Lt)
+function [Albdo] = albedo_fresnal(doy,Lt)
 % This program calculates the albedo on a flat lake from Fresnal's
 % Law (Neumann & Pierson, 1966).  The angle of refraction is given
 % by Snell's Law.  The index of refraction is assumed to be
