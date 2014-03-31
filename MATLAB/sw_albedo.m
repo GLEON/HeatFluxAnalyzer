@@ -10,7 +10,6 @@ function sw_alb = sw_albedo(Jday,lat)
 dateV = datevec(Jday); % date vector
 doy = Jday - datenum(dateV(:,1),0,0);
 
-
 % Assign Parameter Values %
 Tropic = 23.45; 
 YrDays = 365.0;       
