@@ -27,7 +27,7 @@ Uz(Uz < 0.2) = 0.2;
 % define constants
     const_vonKarman = 0.41; % von Karman constant
     const_gas = 287.1; % gas constant for dry air J kg-1 K-1
-    const_SpecificHeatAir = 1005; % Specific heat capacity of air, J kg-1 K-1
+    const_SpecificHeatAir = 1006; % Specific heat capacity of air, J kg-1 K-1
     const_Charnock = 0.013; % charnock constant
     const_Gravity = 9.81; % gravitational acceleration, m/s2
 
