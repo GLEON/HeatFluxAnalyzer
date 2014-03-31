@@ -18,7 +18,7 @@ DgCrcl = 360.0;
 DgToRd = 57.29577951; 
 RefInd = 1.34; % This is a mild function of T and S. http://scubageek.com/articles/wwwh2o.html
 
-Lat = lat/DgToRd;                                  % Start year at 0.0
+Lat = lat/DgToRd;                                 
 z = DclDay + floor(doy);
 x = DgCrcl*z/YrDays/DgToRd;
 y = sin(x);
