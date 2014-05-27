@@ -618,7 +618,7 @@ end
 
 % calculate surface fluxes
 if TT.senslatYes || TT.QtotYes
-    mm = sens_latent(wtr,wnd,airT,rh,wndH,htH,hqH,alt);
+    mm = sens_latent(wtr,wnd,airT,rh,wndH,htH,hqH,alt,lat);
 end
 
 % atmospheric stability

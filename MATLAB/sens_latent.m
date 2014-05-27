@@ -1,4 +1,4 @@
-function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt)
+function mm = sens_latent(ts,Uz,ta,rh,hu,ht,hq,alt,lat)
 
 % ts: surface temperature, degrees C.
 % Uz: wind speed, m/s.
