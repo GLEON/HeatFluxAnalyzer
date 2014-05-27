@@ -29,7 +29,7 @@ Uz(Uz < 0.2) = 0.2;
     const_gas = 287.1; % gas constant for dry air J kg-1 K-1
     const_SpecificHeatAir = 1006; % Specific heat capacity of air, J kg-1 K-1
     const_Charnock = 0.013; % charnock constant
-    const_Gravity = 9.81; % gravitational acceleration, m/s2
+    const_Gravity = 9.78033.*(1+(0.0053.*(sin(abs(lat)).^2) - 5.8e-6.*(sin(abs(lat)).^2))); % gravitational acceleration, m/s2
 
 % calculate air pressure from altitude
     press = 101325.*(1 - 2.25577e-5.*alt).^5.25588; % Pa
