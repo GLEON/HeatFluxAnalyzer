@@ -27,6 +27,6 @@ function Pressure = SatVaporFromTemp( Temperature )
     a4 = 3.031240396E-6;
     a5 = 2.034080948E-8;
     a6 = 6.136820929E-11;
-    Pressure = a0 + T.*(a1+T.*(a2+T.*(a3+T.*(a4+T.*(a5*a6*T)))));
+    Pressure = a0 + T.*(a1+T.*(a2+T.*(a3+T.*(a4+T.*(a5+a6*T)))));
     Pressure = Pressure/1000; %now in bar
 end
