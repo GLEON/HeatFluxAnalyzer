@@ -521,7 +521,7 @@ if TT.openLWnet;
                         
             % define lwnet
             lwnet = lw - LWo;
-            lwnet = -lwnet; % positive means cooling
+            lwnet = lwnet;
             lwnetD = idx;
         else
             fprintf(['...' LakeName '.lwnet and .lw file missing, using .airT, .rh, .sw, .wtr instead...\n\n'])
@@ -541,7 +541,7 @@ if TT.openLWnet;
             end
             % then replace nan with dat2
             Qlnet(isnan(Qlnet)) = Q2(isnan(Qlnet));
-            lwnet = -Qlnet;
+            lwnet = Qlnet;
             lwnetD = dates;
         end
     end     
@@ -775,7 +775,7 @@ if TT.wrt_Qlin
     % then replace nan with dat2
     lw(isnan(lw)) = Q2(isnan(lw));
     
-    writeTable.Qlin = -lw;
+    writeTable.Qlin = lw;
 end
 
 % outgoing long wave heat flux
@@ -798,7 +798,7 @@ end
 
 % total surface heat flux
 if TT.wrt_Qtot
-    Qtot = -sw + Qsr + Qe + Qh + lwnet;
+    Qtot = sw - Qsr - Qe - Qh + lwnet;
     writeTable.Qtot = Qtot;
 end
 
