@@ -529,18 +529,6 @@ if TT.openLWnet;
             press = 101325.*(1 - 2.25577e-5.*alt).^5.25588; % Pa
             press = press./100; % mb
             [~,~,Qlnet] = calc_lwnet(dates,lat,press,airT,rh,sw,wtr);
-
-            % ensure night time long wave fluxes are equal to the average day time fluxes
-            % cannot detect clooud cover during night
-            dateV = datevec(dates);
-            [~,~,b] = unique(dateV(:,1:3),'rows');
-            daily_av = accumarray(b,Qlnet,[],@nanmean);
-            Q2 = Qlnet;
-            for ii = 1:length(unique(b));
-                Q2(b == ii) = daily_av(ii);
-            end
-            % then replace nan with dat2
-            Qlnet(isnan(Qlnet)) = Q2(isnan(Qlnet));
             lwnet = Qlnet;
             lwnetD = dates;
         end

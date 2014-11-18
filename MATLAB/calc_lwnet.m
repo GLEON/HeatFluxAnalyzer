@@ -1,10 +1,26 @@
 function [lw,LWo,lwnet] = calc_lwnet(Jday,lat,press,ta,rh,sw,ts)    
     clrSW = clearSkySW(Jday,lat,press,ta,rh*.01);
     clf = 1-sw./clrSW;
+    
+    % impose limits
     ltI = lt(clf,0);
     clf(ltI) = 0;
     gtI = gt(clf,1);
     clf(gtI) = 1;
+    
+    % when short-wave is zero make cc = day time average
+    dateV = datevec(Jday);
+    [~,~,b] = unique(dateV(:,1:3),'rows');
+    daily_av = accumarray(b,clf,[],@nanmean);
+    c2 = clf;
+    for ii = 1:length(unique(b));
+        c2(b == ii) = daily_av(ii);
+    end
+    clf(sw == 0) = c2(sw == 0);
+    
+    % if still NaN, assume cloud cover is zero (at night, same as Read et al. 2012)
+    clf(isnan(clf)) = 0;
+    
     month = datevec(Jday);
     month = month(:,2);
     lw = Mdl_LW(ta,rh*0.01,clf,month);
