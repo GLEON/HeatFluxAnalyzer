@@ -207,7 +207,7 @@ Uz(Uz < 0.2) = 0.2;
         C_D = (ustar.*ustar)./(Uz.*Uz);
         
         % calculate tau and sensible and latent heat fluxes
-        tau = C_D.*rho_a.*ustar.*ustar;
+        tau = rho_a.*ustar.*ustar;
         ash = -rho_a.*const_SpecificHeatAir.*ustar.*tstar;           
         alh = -rho_a.*xlv.*ustar.*qstar;
                 
