@@ -12,6 +12,7 @@ function mm = neutral_transfer_coeff(Uz,hu)
     KinV = 1.5e-5; 
 
 % estimate initial values of u* and zo
+%     Uz(Uz == 0) = 0.001; % need wind to be > 0, otherwise equation breaks down see Amorocho and Devries (1980)
     ustarN = Uz.*sqrt(0.00104+0.0015./(1+exp((-Uz+12.5)./1.56)));
     zo = (const_Charnock.*ustarN.^2./const_Gravity) + (0.11.*KinV./ustarN);
     zo_prev = zo.*1.1;

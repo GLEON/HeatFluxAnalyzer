@@ -779,6 +779,7 @@ end
 if TT.wrt_Qsr || TT.QtotYes
     sw_alb = sw_albedo(dates,lat);
     Qsr = sw.*sw_alb; % reflected short wave radiation
+    
     if TT.wrt_Qsr
         writeTable.Qsr = Qsr;
     end
