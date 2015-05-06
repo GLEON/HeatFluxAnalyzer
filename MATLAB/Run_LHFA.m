@@ -791,6 +791,18 @@ if TT.wrt_Qtot
     writeTable.Qtot = Qtot;
 end
 
+% short wave radiation
+if TT.wrt_Qs;
+    writeTable.Qs = sw;
+end
+
+% short wave radiation
+if TT.wrt_Qsin;
+    sw_alb = sw_albedo(dates,lat);
+    Qsr = sw.*sw_alb; % reflected short wave radiation
+    writeTable.Qsin = sw - Qsr;
+end
+
 % build plot array
 if plotYes
     fprintf('Plotting results');
