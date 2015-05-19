@@ -2,6 +2,8 @@ function Run_LHFA(LakeName,Folder,skipLoad)
 %----Author: Jordan S Read 2009 ----
 %----Modified by R. Iestyn Woolway ----
 
+lhfa_version = '1.1.0';
+
 if nargin < 3
     skipLoad = false;
 end
@@ -14,6 +16,8 @@ if ~skipLoad
     end
     pause(0.1);
 end
+
+fprintf(['Running LHFA version ' lhfa_version '\n\n']);
 
 % -- variables --
 matSec = 86400;         % number of seconds in a day
