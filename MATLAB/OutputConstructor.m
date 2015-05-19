@@ -5,7 +5,7 @@ function [truthTable,outputOptions,writeTable,plotTable,...
 outputOptions = {'tau','Qh','Qe','C_DN','C_EN',...
      'C_HN','C_D10N','C_E10N','C_H10N','C_D','C_E','C_H',...
      'C_D10','C_E10','C_H10','u10','u10N','t10','rh10','Qlnet','Qlin','Qlout',...
-     'uSt_a','uSt_aN','Evap','wTemp','Qsr','obu','Qtot','Qs','Qsin'};
+     'uSt_a','uSt_aN','Evap','wTemp','Qsr','obu','Qtot','Qs','Qsin','rhoa10','rhow','rhoa'};
   
 % writable outputs
 programOptions= {'openWtr','openWnd','openWnd','openRH',...
@@ -261,7 +261,7 @@ RunNeed.(char(name)) = {'openWtr','openWnd','openRH','openAirT','wrt_uSt_a',...
 RunAxes.(char(name)) = struct('YLabel',' (m s^{-1})',...
     'Title','Air shear velocity');
 
-% Air shear velocity
+% Air shear velocity neutral
 name = 'uSt_aN';
 RunNeed.(char(name)) = {'openWnd','wrt_uSt_aN'};
 RunAxes.(char(name)) = struct('YLabel',' (m s^{-1})',...
@@ -305,6 +305,25 @@ name = 'Qsin';
 RunNeed.(char(name)) = {'openSW','wrt_Qsin'};
 RunAxes.(char(name)) = struct('YLabel',' (W m^{-2})',...
     'Title','Net incoming short wave radiation');
+
+% air density at 10m
+name = 'rhoa10';
+RunNeed.(char(name)) = {'openWtr','openWnd','openRH','openAirT','wrt_rhoa10',...
+    'senslatYes'};
+RunAxes.(char(name)) = struct('YLabel',' (kg m^{-3})',...
+    'Title','Air density (10 m)');
+
+% water density
+name = 'rhow';
+RunNeed.(char(name)) = {'openWtr','wrt_rhow'};
+RunAxes.(char(name)) = struct('YLabel',' (kg m^{-3})',...
+    'Title','Water density');
+
+% air density
+name = 'rhoa';
+RunNeed.(char(name)) = {'openAirT','openRH','wrt_rhoa'};
+RunAxes.(char(name)) = struct('YLabel',' (kg m^{-3})',...
+    'Title','Air density');
 
 % Fill Construct
 fNms = fieldnames(outputConstruct);

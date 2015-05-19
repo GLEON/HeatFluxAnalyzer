@@ -1,6 +1,6 @@
 function Run_LHFA(LakeName,Folder,skipLoad)
 %----Author: Jordan S Read 2009 ----
-%----version 3.3.1 2013-05-10 ------
+%----Modified by R. Iestyn Woolway ----
 
 if nargin < 3
     skipLoad = false;
@@ -787,7 +787,8 @@ end
 
 % total surface heat flux
 if TT.wrt_Qtot
-    Qtot = sw - Qsr - Qe - Qh + lwnet;
+    % Qtot = sw - Qsr - Qe - Qh + lwnet;
+    Qtot = sw - Qsr - Qe - Qh + lw - LWo;
     writeTable.Qtot = Qtot;
 end
 
@@ -801,6 +802,38 @@ if TT.wrt_Qsin;
     sw_alb = sw_albedo(dates,lat);
     Qsr = sw.*sw_alb; % reflected short wave radiation
     writeTable.Qsin = sw - Qsr;
+end
+
+% air density 10 m
+if TT.wrt_rhoa10;
+    airT10 = mm(:,8);
+    rh10 = mm(:,10);
+    press = 101325.*(1 - 2.25577e-5.*alt).^5.25588; % Pa
+    press = press./100; % mb
+    e_s = 6.11.*exp(17.27.*airT10./(237.3 + airT10)); % saturated vapour pressure at ta, mb
+    e_a = rh10.*e_s./100; % vapour pressure, mb
+    q_z = 0.622.*e_a./press; % specific humidity, kg kg-1 
+    R_a = 287.*(1 + 0.608.*q_z);
+    rhoa10 = 100*press./(R_a.*(airT10 + 273.16));
+    writeTable.rhoa10 = rhoa10;
+end
+
+% water density
+if TT.wrt_rhow;
+    rhow = 1000*(1-1.9549*0.00001*abs(wtr-3.84).^1.68);
+    writeTable.rhow = rhow;
+end
+
+% air density
+if TT.wrt_rhoa;
+    press = 101325.*(1 - 2.25577e-5.*alt).^5.25588; % Pa
+    press = press./100; % mb
+    e_s = 6.11.*exp(17.27.*airT./(237.3 + airT)); % saturated vapour pressure at ta, mb
+    e_a = rh.*e_s./100; % vapour pressure, mb
+    q_z = 0.622.*e_a./press; % specific humidity, kg kg-1 
+    R_a = 287.*(1 + 0.608.*q_z);
+    rhoa = 100*press./(R_a.*(airT + 273.16));
+    writeTable.rhoa = rhoa;
 end
 
 % build plot array
