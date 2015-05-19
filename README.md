@@ -5,4 +5,4 @@ Lake Heat Flux Analyzer is a MATLAB code package for calculating heat flux infor
 
 Citing Lake Heat Flux Analyzer
 -------
-The package has a user manual (http://heatfluxanalyzer.gleon.org/) and a publication (In prep): R. Iestyn Woolway, Ian D. Jones, David P. Hamilton, Stephen C. Maberly, Kohji Muroaka, Jordan S. Read, Robyn L. Smyth, Luke A. Winslow. Bulk parameterization of surface fluxes for high resolution lake buoy data. In prep.
+The package has a user manual (http://heatfluxanalyzer.gleon.org/) and a publication (In Press): R. Iestyn Woolway, Ian D. Jones, David P. Hamilton, Stephen C. Maberly, Kohji Muroaka, Jordan S. Read, Robyn L. Smyth, Luke A. Winslow. Bulk parameterization of surface fluxes for high resolution lake buoy data. In prep.
