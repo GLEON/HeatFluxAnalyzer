@@ -2,7 +2,7 @@ function Run_LHFA(LakeName,Folder,skipLoad)
 %----Author: Jordan S Read 2009 ----
 %----Modified by R. Iestyn Woolway ----
 
-lhfa_version = '1.1.0';
+lhfa_version = '1.1.1';
 
 if nargin < 3
     skipLoad = false;
@@ -754,19 +754,7 @@ end
 if TT.wrt_Qlin
     press = 101325.*(1 - 2.25577e-5.*alt).^5.25588; % Pa
     press = press./100; % mb
-    [lw,~,~] = calc_lwnet(wtrD,lat,press,airT,rh,sw,wtr);
-    
-    % ensure night time long wave fluxes are equal to the average day time fluxes
-    dateV = datevec(dates);
-    [~,~,b] = unique(dateV(:,1:3),'rows');
-    daily_av = accumarray(b,lw,[],@nanmean);
-    Q2 = lw;
-    for ii = 1:length(unique(b));
-        Q2(b == ii) = daily_av(ii);
-    end
-    % then replace nan with dat2
-    lw(isnan(lw)) = Q2(isnan(lw));
-    
+    [lw,~,~] = calc_lwnet(dates,lat,press,airT,rh,sw,wtr); 
     writeTable.Qlin = lw;
 end
 
