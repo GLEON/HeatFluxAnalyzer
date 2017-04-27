@@ -769,9 +769,15 @@ end
 
 % reflected short wave radiaiton
 if TT.wrt_Qsr || TT.QtotYes
-    sw_alb = sw_albedo(dates,lat);
-    Qsr = sw.*sw_alb; % reflected short wave radiation
-    
+    if outRs >= 86400;
+        datev = datevec(dates);
+        datev(:,4) = 12;
+        dates2 = datenum(datev);
+        sw_alb = sw_albedo(dates2,lat);
+    else
+        sw_alb = sw_albedo(dates,lat);
+    end
+    Qsr = sw.*sw_alb; % reflected short wave radiation    
     if TT.wrt_Qsr
         writeTable.Qsr = Qsr;
     end
@@ -791,7 +797,14 @@ end
 
 % short wave radiation
 if TT.wrt_Qsin;
-    sw_alb = sw_albedo(dates,lat);
+    if outRs >= 86400; % quick fix for >daily averages
+        datev = datevec(dates);
+        datev(:,4) = 12;
+        dates2 = datenum(datev);
+        sw_alb = sw_albedo(dates2,lat);
+    else
+        sw_alb = sw_albedo(dates,lat);
+    end
     Qsr = sw.*sw_alb; % reflected short wave radiation
     writeTable.Qsin = sw - Qsr;
 end
