@@ -2,7 +2,7 @@ function Run_LHFA(LakeName,Folder,skipLoad)
 %----Author: Jordan S Read 2009 ----
 %----Modified by R. Iestyn Woolway ----
 
-lhfa_version = '1.1.1';
+lhfa_version = '1.1.2';
 
 if nargin < 3
     skipLoad = false;
