@@ -377,14 +377,14 @@ if ~TT.openSW
         idx = intersect(intersect(intersect(wtrD,wndD),rhD),airTD); 
         dates = idx;
         varL = length(dates);
-        wtrD = idx;
-        wndD = idx;
-        rhD = idx;
-        airTD = idx;
         wtr = wtr(ismember(wtrD,idx));
         wnd = wnd(ismember(wndD,idx));
         rh = rh(ismember(rhD,idx));
         airT = airT(ismember(airTD,idx)); 
+        wtrD = idx;
+        wndD = idx;
+        rhD = idx;
+        airTD = idx;
     end
 end
 
@@ -393,14 +393,14 @@ if ~TT.openWnd
         idx = intersect(intersect(intersect(rhD,airTD),wtrD),swD);    
         dates = idx;
         varL = length(dates);
-        wtrD = idx;
-        swD = idx;
-        rhD = idx;
-        airTD = idx;
         rh = rh(ismember(rhD,idx));
         airT = airT(ismember(airTD,idx));
         wtr = wtr(ismember(wtrD,idx));
         sw = sw(ismember(swD,idx)); 
+        wtrD = idx;
+        swD = idx;
+        rhD = idx;
+        airTD = idx;        
     end
 end
 
@@ -408,16 +408,16 @@ if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW && TT.openWnd
     idx = intersect(intersect(intersect(intersect(rhD,airTD),wtrD),swD),wndD);    
     dates = idx;
     varL = length(dates);
-    wtrD = idx;
-    swD = idx;
-    rhD = idx;
-    airTD = idx;
-    wndD = idx;
     rh = rh(ismember(rhD,idx));
     airT = airT(ismember(airTD,idx));
     wtr = wtr(ismember(wtrD,idx));
     sw = sw(ismember(swD,idx)); 
     wnd = wnd(ismember(wndD,idx)); 
+    wtrD = idx;
+    swD = idx;
+    rhD = idx;
+    airTD = idx;
+    wndD = idx;    
 end
 
 if ~TT.openRH && ~TT.openAirT && ~TT.openSW && ~TT.openWnd
@@ -544,34 +544,34 @@ if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW && TT.openLWnet
     idx = intersect(intersect(intersect(intersect(rhD,airTD),wtrD),swD),lwnetD);    
     dates = idx;
     varL = length(dates);
-    wtrD = idx;
-    swD = idx;
-    rhD = idx;
-    airTD = idx;
-    lwnetD = idx;
     rh = rh(ismember(rhD,idx));
     airT = airT(ismember(airTD,idx));
     wtr = wtr(ismember(wtrD,idx));
     sw = sw(ismember(swD,idx)); 
     lwnet = lwnet(ismember(lwnetD,idx)); 
+    wtrD = idx;
+    swD = idx;
+    rhD = idx;
+    airTD = idx;
+    lwnetD = idx;    
 end
 
 if TT.openRH && TT.openAirT && TT.openWtr && TT.openSW && TT.openLWnet && TT.openWnd
     idx = intersect(intersect(intersect(intersect(intersect(rhD,airTD),wtrD),swD),lwnetD),wndD);    
     dates = idx;
     varL = length(dates);
-    wtrD = idx;
-    swD = idx;
-    rhD = idx;
-    airTD = idx;
-    lwnetD = idx;
-    wndD = idx;
     rh = rh(ismember(rhD,idx));
     airT = airT(ismember(airTD,idx));
     wtr = wtr(ismember(wtrD,idx));
     sw = sw(ismember(swD,idx)); 
     lwnet = lwnet(ismember(lwnetD,idx)); 
     wnd = wnd(ismember(wndD,idx)); 
+    wtrD = idx;
+    swD = idx;
+    rhD = idx;
+    airTD = idx;
+    lwnetD = idx;
+    wndD = idx;    
 end
 
 % if data isn't downsampled, define times and variable length
